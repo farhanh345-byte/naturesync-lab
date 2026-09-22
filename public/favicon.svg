@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="NatureSync Lab">
+  <rect width="32" height="32" rx="7" fill="#0B3D38"/>
+  <path fill="#3AAFA9" d="M16 4c7.2 5.2 10.2 11.4 0 24C8.8 15.4 8.8 9.2 16 4z"/>
+  <path fill="none" stroke="#F4F1EA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M16 9.2v13.2M16 14.8h6.2M16 19.6H9.8"/>
+  <circle cx="22.2" cy="14.8" r="1.45" fill="#F4F1EA"/>
+  <circle cx="9.8" cy="19.6" r="1.45" fill="#F4F1EA"/>
+  <circle cx="16" cy="22.4" r="1.45" fill="#F4F1EA"/>
+</svg>

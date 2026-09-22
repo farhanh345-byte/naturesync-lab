@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Outfit:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Iowan Old Style", Palatino, serif;
+  --font-sans: "Outfit", "Avenir Next", ui-sans-serif, system-ui, sans-serif;
+
+  --color-forest: #0b3d38;
+  --color-forest-deep: #072e2a;
+  --color-forest-mid: #12544c;
+  --color-mint: #3aafa9;
+  --color-mint-bright: #5bc4be;
+  --color-cream: #f4f1ea;
+  --color-cream-dark: #e6e0d3;
+  --color-ink: #12201d;
+  --color-muted: #5c6f6a;
+  --color-paper: #fffcf7;
+  --color-bg: #f4f1ea;
+  --color-fg: #12201d;
+  --color-primary: #3aafa9;
+  --color-border: color-mix(in oklab, #12201d 12%, transparent);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  --text-display: clamp(2.4rem, 1.2rem + 4.2vw, 4.35rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-title: clamp(1.75rem, 1.1rem + 2vw, 2.75rem);
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.025em;
+
+  --tracking-eyebrow: 0.18em;
+  --tracking-mark: 0.28em;
+
+  --min-height-hero: 86vh;
+  --min-height-page: 70vh;
+
+  --shadow-border:
+    0 0 0 1px color-mix(in oklab, #12201d 10%, transparent),
+    0 1px 2px -1px color-mix(in oklab, #12201d 6%, transparent);
+  --shadow-border-hover:
+    0 0 0 1px color-mix(in oklab, #12201d 16%, transparent),
+    0 8px 24px -16px color-mix(in oklab, #0b3d38 28%, transparent);
+  --shadow-ring: 0 0 0 1px color-mix(in oklab, #f4f1ea 22%, transparent);
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-mint);
+    outline-offset: 3px;
+  }
+
+  img.framed {
+    outline: 1px solid color-mix(in oklab, var(--color-ink) 10%, transparent);
+    outline-offset: -1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal-delay-1,
+  .reveal-delay-2,
+  .reveal-delay-3 {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.reveal {
+  animation: rise-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-delay-1 {
+  animation-delay: 80ms;
+}
+
+.reveal-delay-2 {
+  animation-delay: 160ms;
+}
+
+.reveal-delay-3 {
+  animation-delay: 240ms;
+}
