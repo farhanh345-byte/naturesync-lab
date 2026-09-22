@@ -20,15 +20,60 @@ const schema = z.object({
 
 type FieldErrors = Partial<Record<keyof z.infer<typeof schema>, string>>;
 
+function draftMailto(data: {
+  name: string;
+  email: string;
+  companyName: string;
+  engagementTitle: string;
+  message: string;
+}) {
+  const subject = encodeURIComponent(`NatureSync Lab — ${data.engagementTitle}`);
+  const body = encodeURIComponent(
+    [
+      data.message,
+      "",
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      data.companyName ? `Company: ${data.companyName}` : "",
+      `Engagement: ${data.engagementTitle}`,
+    ]
+      .filter(Boolean)
+      .join("\n"),
+  );
+  return `mailto:${company.email}?subject=${subject}&body=${body}`;
+}
+
+async function deliverBrief(payload: Record<string, string>) {
+  const response = await fetch(`https://formsubmit.co/ajax/${company.email}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      ...payload,
+      _captcha: "false",
+      _template: "table",
+    }),
+    signal: AbortSignal.timeout(12000),
+  });
+  const json = (await response.json().catch(() => null)) as
+    | { success?: string | boolean }
+    | null;
+  return response.ok && json?.success !== false;
+}
+
 export function ContactForm() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [engagement, setEngagement] = useState<(typeof engagements)[number]["id"]>(
     "fixed",
   );
+  const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [delivered, setDelivered] = useState(false);
   const [mailto, setMailto] = useState<string | null>(null);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
@@ -51,37 +96,60 @@ export function ContactForm() {
       return;
     }
     setErrors({});
+    setSending(true);
     const chosen =
       engagements.find((item) => item.id === parsed.data.engagement)?.title ??
       parsed.data.engagement;
-    const subject = encodeURIComponent(`NatureSync Lab — ${chosen}`);
-    const body = encodeURIComponent(
-      [
-        parsed.data.message,
-        "",
-        `Name: ${parsed.data.name}`,
-        `Email: ${parsed.data.email}`,
-        parsed.data.companyName ? `Company: ${parsed.data.companyName}` : "",
-        `Engagement: ${chosen}`,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-    );
-    setMailto(`mailto:${company.email}?subject=${subject}&body=${body}`);
+    const href = draftMailto({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      companyName: parsed.data.companyName,
+      engagementTitle: chosen,
+      message: parsed.data.message,
+    });
+    setMailto(href);
+
+    let ok = false;
+    try {
+      ok = await deliverBrief({
+        name: parsed.data.name,
+        email: parsed.data.email,
+        company: parsed.data.companyName || "(not given)",
+        engagement: chosen,
+        message: parsed.data.message,
+        _subject: `NatureSync Lab — ${chosen}`,
+        _replyto: parsed.data.email,
+      });
+    } catch {
+      ok = false;
+    }
+
+    setDelivered(ok);
     setSent(true);
+    setSending(false);
+
+    if (!ok) {
+      const link = document.createElement("a");
+      link.href = href;
+      link.click();
+    }
   }
 
   if (sent) {
     return (
       <div className="rounded-2xl bg-paper p-6 shadow-border sm:p-8">
         <p className="text-sm font-medium uppercase tracking-eyebrow text-forest-mid">
-          Brief received
+          {delivered ? "Brief sent" : "Brief drafted"}
         </p>
         <h3 className="mt-3 font-display text-2xl font-medium text-ink">
-          Thank you. We’ll reply within one business day.
+          {delivered
+            ? "Thank you. We’ll reply within one business day."
+            : "Open your mail app so the brief reaches us."}
         </h3>
         <p className="mt-3 text-muted">
-          Send it from your mail client, or write directly to{" "}
+          {delivered
+            ? "A copy is on its way to "
+            : "If nothing opened, send it from your mail client to "}
           <a className="text-forest underline decoration-mint" href={`mailto:${company.email}`}>
             {company.email}
           </a>
@@ -151,8 +219,14 @@ export function ContactForm() {
           placeholder="The problem, the users, and any deadline that is real."
         />
       </Field>
-      <Button type="submit" variant="forest" size="lg" className="w-full sm:w-auto">
-        Send the brief
+      <Button
+        type="submit"
+        variant="forest"
+        size="lg"
+        className="w-full sm:w-auto"
+        disabled={sending}
+      >
+        {sending ? "Sending…" : "Send the brief"}
       </Button>
     </form>
   );
@@ -175,7 +249,11 @@ function Field({
         {label}
       </Label>
       {children}
-      {error ? <p className="mt-1.5 text-sm text-forest-mid">{error}</p> : null}
+      {error ? (
+        <p className="mt-1.5 text-sm text-forest-mid" role="alert">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
