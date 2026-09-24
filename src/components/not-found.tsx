@@ -5,7 +5,7 @@ import { LogoMark } from "@/components/logo";
 export function NotFound() {
   return (
     <main className="flex min-h-page flex-col items-center justify-center px-6 py-20 text-center">
-      <LogoMark className="size-12" />
+      <LogoMark tone="onLight" className="h-14 w-11" />
       <h1 className="mt-8 font-display text-title font-medium text-ink">
         This page is not on the map
       </h1>
