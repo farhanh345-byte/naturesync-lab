@@ -14,6 +14,7 @@ export const company = {
 
 export const nav = [
   { to: "/about", label: "About" },
+  { to: "/products", label: "Products" },
   { to: "/services", label: "Services" },
   { to: "/process", label: "Process" },
   { to: "/contact", label: "Contact" },
@@ -79,6 +80,28 @@ export const industries = [
   "Services",
   "Education",
   "Operations",
+] as const;
+
+export const products = [
+  {
+    slug: "lunaloop-cycle",
+    name: "LunaLoop Cycle",
+    status: "Live product",
+    category: "Health & wellness",
+    tagline: "A private cycle companion.",
+    summary:
+      "LunaLoop Cycle helps you see where you are in your cycle today, log without clutter, and read a short explainer — privately, on the device in your hand.",
+    body: "NatureSync Lab designed and built LunaLoop as a wellness product, not a clinic. Period, symptoms, mood, energy, and sleep sit in one calm view. Predictions are labeled estimates from the history you log. Logs stay on the device. No account is required.",
+    url: "https://www.lunaloopcycle.com/",
+    features: [
+      "Period, symptom, mood, energy, and sleep logs",
+      "Cycle ring, calendar, and day view in one place",
+      "Labeled estimates for upcoming period and ovulation",
+      "On-device logs — no cloud account required",
+      "Two-minute reads on periods, hormones, fertility, and care",
+    ],
+    note: "Wellness tool, not a medical device. Estimates are not a diagnosis. For health concerns, talk to a clinician.",
+  },
 ] as const;
 
 export const services = [
@@ -224,7 +247,7 @@ export const chips = [
   "SaaS platforms",
   "Mobile applications",
   "Web products",
+  "Health & wellness",
   "Cloud architecture",
   "UI / UX",
-  "Digital transformation",
 ] as const;
