@@ -1,7 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { CircuitField } from "@/components/circuit-field";
+import { StartConversationButton } from "@/components/start-conversation";
 
 export function CtaBand() {
   return (
@@ -21,12 +19,7 @@ export function CtaBand() {
             the right fit.
           </p>
         </div>
-        <Button asChild variant="primary" size="lg">
-          <Link to="/contact">
-            Start a conversation
-            <ArrowUpRight className="size-4" />
-          </Link>
-        </Button>
+        <StartConversationButton size="lg" />
       </div>
     </section>
   );
