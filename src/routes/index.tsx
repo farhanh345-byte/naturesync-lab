@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { CircuitField } from "@/components/circuit-field";
 import { CtaBand } from "@/components/cta-band";
 import { SectionHeading } from "@/components/section-heading";
+import { StartConversationButton } from "@/components/start-conversation";
 import {
   chips,
   company,
@@ -67,12 +68,7 @@ function Home() {
             behind them — designed to be run, owned, and grown.
           </p>
           <div className="reveal reveal-delay-3 mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg">
-              <Link to="/contact">
-                Start a conversation
-                <ArrowUpRight className="size-4" />
-              </Link>
-            </Button>
+            <StartConversationButton size="lg" />
             <Button asChild variant="outline" size="lg">
               <Link to="/services">What we build</Link>
             </Button>
