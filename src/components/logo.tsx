@@ -5,22 +5,23 @@ type LogoTone = "onDark" | "onLight";
 
 function OfficialLeaf({ fill, trace }: { fill: string; trace: string }) {
   return (
-    <svg viewBox="0 0 40 52" className="h-full w-auto" aria-hidden="true">
+    <svg viewBox="0 0 36 48" className="h-full w-auto" aria-hidden="true">
       <path
         fill={fill}
-        d="M10.2 23.2 10.2 18.6 14.8 10.4 20 2.6 29.2 15.2 25.2 21.2 32.4 23.6 32.4 29.2 20 49.4 7.6 29.2 7.6 23.6 14.8 21.2Z"
+        d="M7.2 22.2 11.2 16.6 18 22.6 24.8 16.6 28.8 22.2 28.8 27.2 18 46.2 7.2 27.2Z"
       />
+      <path fill={fill} d="M11.2 16.6 18 2.4 24.8 16.6 18 22.6Z" />
       <path
         fill="none"
         stroke={trace}
-        strokeWidth="1.7"
+        strokeWidth="1.55"
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M20 8.2v33.6M20 23.2 10.4 30.2M20 16.6 28.2 11.2M20 28.2 29.6 34.4"
+        d="M18 7.2v32.2M18 22.2 9.4 28.6M18 15.4 25.6 10.2M18 26.6 26.8 32.2"
       />
-      <circle cx="10.4" cy="30.2" r="2" fill={fill} stroke={trace} strokeWidth="1.4" />
-      <circle cx="28.2" cy="11.2" r="2" fill={fill} stroke={trace} strokeWidth="1.4" />
-      <circle cx="29.6" cy="34.4" r="2" fill={fill} stroke={trace} strokeWidth="1.4" />
+      <circle cx="9.4" cy="28.6" r="1.85" fill={fill} stroke={trace} strokeWidth="1.3" />
+      <circle cx="25.6" cy="10.2" r="1.85" fill={fill} stroke={trace} strokeWidth="1.3" />
+      <circle cx="26.8" cy="32.2" r="1.85" fill={fill} stroke={trace} strokeWidth="1.3" />
     </svg>
   );
 }
@@ -35,10 +36,7 @@ export function LogoMark({
   const onLight = tone === "onLight";
   return (
     <span className={cn("inline-flex h-10 w-8 shrink-0", className)}>
-      <OfficialLeaf
-        fill={onLight ? "#1B3A2F" : "#E8F0EA"}
-        trace="#7DB8A0"
-      />
+      <OfficialLeaf fill={onLight ? "#1B3A2F" : "#E8F0EA"} trace="#7DB8A0" />
     </span>
   );
 }
