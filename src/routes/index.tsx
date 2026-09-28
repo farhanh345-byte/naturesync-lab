@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CircuitField } from "@/components/circuit-field";
 import { CtaBand } from "@/components/cta-band";
+import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
 import { StartConversationButton } from "@/components/start-conversation";
 import {
@@ -20,6 +21,7 @@ import {
   company,
   glance,
   nameMeaning,
+  products,
   reasons,
   services,
   steps,
@@ -70,7 +72,7 @@ function Home() {
           <div className="reveal reveal-delay-3 mt-8 flex flex-wrap gap-3">
             <StartConversationButton size="lg" />
             <Button asChild variant="outline" size="lg">
-              <Link to="/services">What we build</Link>
+              <Link to="/products">Our products</Link>
             </Button>
           </div>
           <ul className="mt-12 flex flex-wrap gap-2">
@@ -96,6 +98,24 @@ function Home() {
               <p className="mt-2 text-sm leading-relaxed text-ink">{item.value}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHeading eyebrow="In market" title="LunaLoop Cycle.">
+            A private cycle companion designed and built by NatureSync Lab.
+            Wellness tracking — not a medical device.
+          </SectionHeading>
+          <Button asChild variant="ghost" className="self-start sm:self-auto">
+            <Link to="/products">
+              All products
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </Button>
+        </div>
+        <div className="mt-10">
+          <ProductCard slug={products[0].slug} />
         </div>
       </section>
 
